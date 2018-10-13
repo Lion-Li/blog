@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}WeBlog-创作{% endblock %}
+{% block css %}
+    <style type="text/css">
+        .toolbar {
+            border: 1px solid #ccc;
+        }
+        .text {
+            border: 1px solid #ccc;
+            height: 400px;
+        }
+    </style>
+{% endblock %}
+{% block body%}
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    {# 导航栏 #}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
+        <a class="navbar-brand" href="{% url 'article:index' %}">
+            <h2>WeBlog</h2>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {#                <li class="nav-item active">#}
+                {#                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>#}
+                {#                </li>#}
+                {#                <li class="nav-item">#}
+                {#                    <a class="nav-link" href="#">Link</a>#}
+                {#                </li>#}
+                {#                <li class="nav-item">#}
+                {#                    <a class="nav-link disabled" href="#">Disabled</a>#}
+                {#                </li>#}
+            </ul>
+
+
+            <div class="btn-group btn-group-lg">
+                {# 提交按钮 #}
+                <button type="button" id="jsStayBtn" class="btn btn-outline-secondary" data-toggle="modal" data-target=".bd-example-modal-lg">保存</button>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container" >
+        <!-- 消息提示 -->
+        {% if error %}
+            <div class="alert alert-dismissible fade show alert-danger" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+              <strong>{{ error }}</strong>
+            </div>
+        {% endif %}
+
+        <!-- 标题 -->
+        <div class="row">
+            <div class="col-6">
+                {% block article_title %}
+                    <input type="text" class="form-control" name="title" value="" id="example-text-input" placeholder="这里输入标题" style="margin-top: 30px; margin-bottom: 15px;">
+                {% endblock %}
+            </div>
+            <fieldset class="form-group">
+            <label for="Select">分类</label>
+                <select class="form-control" id="Select" name="options">
+                    {% for label in labels %}
+                        <option>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </fieldset>
+        </div>
+
+        <!-- 富文本编辑器 -->
+        <div class="row">
+            <div class="col-12" style="">
+{#                <div style="display: none">#}
+{#                    <textarea id="text1" name="content"></textarea>#}
+{#                </div>#}
+                 <div id="div1" class="toolbar"></div>
+                 <div id="div2" class="w-e-text-container" style="border:1px solid #ccc; border-top:none; height:450px; z-index:10000;"> <!--可使用 min-height 实现编辑区域自动增加高度-->
+                        {% autoescape off %}
+                        {% block article_content %}
+                            <p>请输入内容</p>
+                        {% endblock %}
+                        {% endautoescape %}
+                 </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<script type="text/javascript" src="{% static 'wangEditor-3.1.1/release/wangEditor.js' %}"></script>
+<script type="text/javascript" src="{% static 'Bootstrap-4.1.1/js/jQuery v3.3.1.js' %}"></script>
+<script type="text/javascript" src="{% static 'js-cookie-master/src/js.cookie.js' %}"></script>
+<script type="text/javascript" src="{% static 'editor.js' %}"></script>
+<script type="text/javascript" src="{% static 'ajax_post.js' %}"></script>
+{% endblock %}

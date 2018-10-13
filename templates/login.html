@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}WeBlog-登录{% endblock %}
+{% block css %}<link href="{% static 'bootstrap-3.3.7-dist/css/login.css' %}">{% endblock %}
+{% block content%}
+<div class="container">  <!-- 弹性布局 -->
+    <div class="row" style="height: 350px;">
+        <div class="col-4"></div>
+
+            <div class="col-4 align-self-center">
+              <form class='form-login' action="" method="post">
+                  {% csrf_token %}
+                  {% if errmsg %}
+                      <div class="alert alert-warning">{{ errmsg }}</div>
+                  {% endif %}<!-- 错误消息提示 -->
+
+                  <h2 class="text-center">欢迎登录</h2>
+                  <div class="form-group">
+                    <label for="id_username">用户名：</label>
+                    <input type="text" name='username' class="form-control" id="id_username" placeholder="Username" autofocus required>
+                  </div>
+                  <div class="form-group">
+                    <label for="id_password">密码：</label>
+                    <input type="password" name='password' class="form-control" id="id_password" placeholder="Password" required>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-2">
+                          <a class="btn btn-default pull-left" href="{% url 'user:register' %}">注册</a>
+                      </div>
+                      <div class="col-md-3 offset-md-7">
+                          <button type="submit" class="btn btn-primary pull-right">登陆</button>
+                      </div>
+                  </div>
+              </form>
+            </div>
+
+        <div class="col-4"></div>
+    </div> <!-- /container -->
+</div>
+{% endblock %}

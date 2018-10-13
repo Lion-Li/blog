@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}WeBlog-注册{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row" style="height: 500px;">
+        <div class="col-sm"></div>
+
+        <div class="col-sm-4 align-self-center">
+          <form class='form-register' action="" method="post">
+
+              {% if errmsg %}
+                  <div class="alert alert-warning">{{ errmsg }}</div>
+              {% endif %}
+
+              {% csrf_token %}
+
+              <h2 class="text-center">欢迎注册</h2>
+
+              <div class="form-group">
+                  <label for="id_username">用户名：</label>
+                  <input type="text" name='username' class="form-control" id="id_username" placeholder="请输入用户名" autofocus required>
+              </div>
+
+              <div class="form-group">
+                  <label for="id_password">密码：</label>
+                  <input type="password" name='password' class="form-control" id="id_password" placeholder="请输入密码" required>
+              </div>
+
+              <div class="form-group">
+                  <input type="password" name='password_again' class="form-control" id="id_password" placeholder="请再次输入密码" required>
+              </div>
+
+              <div class="form-group">
+                  <label for="id_email">邮箱：</label>
+                  <input type="text" name='email' class="form-control" id="id_email" placeholder="请输入有效邮箱" required>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-2">
+                      <button type="reset" class="btn btn-default pull-left">重置</button>
+                  </div>
+                  <div class="col-md-2 offset-md-7">
+                      <button type="submit" class="btn btn-primary pull-right">注册</button>
+                  </div>
+              </div>
+
+          </form>
+        </div>
+
+        <div class="col-sm"></div>
+        </div>
+    </div> <!-- /container -->
+
+
+{% endblock %}

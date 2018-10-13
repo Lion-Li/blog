@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}WeBlog-用户主页{% endblock %}
+{% block css %}
+{% endblock %}
+{% block content %}
+    <div class="container" style="margin-top: 30px;">  <!-- 弹性布局 -->
+    <div class="row px-5">
+        <div class="col px-5" style="max-width: 800px;">
+{#            <ul class="nav nav-tabs">#}
+{#                {% for label in labels %}#}
+{#                    <li class="nav-item">#}
+{#                        <a href="{% url 'user:article_label' label.id %}" style="color: #333;" class="nav-link {% if label.id == article_label %}#}
+{#                    active#}
+{#                    {% endif %}">{{ label.label }}</a>#}
+{#                    </li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+            <h2>{{ auther }}</h2>
+            <ul class="list-unstyled">
+                    {% for article in articles %}
+                        <li class="media border-top border-secondary py-3">
+                            {#                        <img class="align-self-center mr-3 rounded-circle" src="http://n.sinaimg.cn/translate/20170726/Zjd3-fyiiahz2863063.jpg" style="max-width: 64px; max-height: 64px;" alt="图片">#}
+                            <div class="col-10 media-body" style="padding-left: 0;">
+                                <h3 class="mt-0 mb-1">
+                                    <a href="{% url 'article:details' article.id  %}" style="color: #333;">{{ article.title }}</a>
+                                </h3>
+                                <div class="panel-footer">
+                                    <span class="badge badge-pill badge-dark" style="margin-right: 10px;">{{ article.label }}</span>
+                                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>{{ article.create_time }}
+                                    {% if request.user.id == article.auther_id %}
+                                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span><a href="{% url 'article:delete' article.id %}">删除</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+            </ul>
+            <div class="panel panel-primary container " {# style="width: 800px;" #}>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

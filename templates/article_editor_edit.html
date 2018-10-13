@@ -1,0 +1,14 @@
+{% extends 'article_editor.html' %}
+{% block title %}WeBlog-编辑{% endblock %}
+{% block article_title %}
+    <input type="text" class="form-control" style="margin-top: 30px;margin-bottom: 15px;" name="title" id="example-text-input" value="{{ article.title }}" placeholder="这里输入标题">
+{% endblock %}
+{% block label %}
+    <option selected="selected">{{ article.label }}</option>
+    {% for label in labels %}
+        <option>{{ label.label }}</option>
+    {% endfor %}
+{% endblock %}
+{% block article_content %}
+    {{ article.content }}
+{% endblock %}

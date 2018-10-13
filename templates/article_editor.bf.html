@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}WeBlog-创作{% endblock %}
+{% block js_head %}
+    <script src="{% static 'tinymce/js/tinymce/tinymce.min.js' %}"></script>
+    <script scr="{% static 'tinymce/js/tinymce/jquery.tinymce.min.js' %}"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#mytextarea',  /*绑定编辑器所有容器*/
+            language: 'zh_CN',
+            images_upload_url: '{% url 'article:image' %}',
+            height: 450,  {# 编辑框高度 #}
+            max_width: 700,
+            statusbar: false,  {# 编辑框下方拖放栏 #}
+            plugins: 'fullscreen image imagetools',  {# 编辑器插件 #}
+            menubar: false,
+            toolbar: "undo redo | bold italic | styleselect fontselect fontsizeselect | bullist numlist outdent indent | alignleft aligncenter alignright alignjustify | print preview media | forecolor backcolor emoticons | image",
+            file_picker_types: 'image',
+            font_formats: "宋体=宋体;微软雅黑=微软雅黑;新宋体=新宋体;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n"
+            /*默认字体大小*/
+        });
+
+        tinymce.activeEditor.uploadImages(function(success) {
+           document.forms[0].submit();
+        });<!-- 图片上传逻辑 -->
+
+  </script>
+{% endblock %}
+{% block body%}
+<form action="" method="post">
+    {# 导航栏 #}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
+        <a class="navbar-brand" href="{% url 'article:index' %}">
+            <h2>WeBlog</h2>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {#                <li class="nav-item active">#}
+                {#                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>#}
+                {#                </li>#}
+                {#                <li class="nav-item">#}
+                {#                    <a class="nav-link" href="#">Link</a>#}
+                {#                </li>#}
+                {#                <li class="nav-item">#}
+                {#                    <a class="nav-link disabled" href="#">Disabled</a>#}
+                {#                </li>#}
+            </ul>
+
+
+            <div class="btn-group btn-group-lg">
+                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target=".bd-example-modal-lg">发布</button>
+            </div>
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">请选择分类</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only">关闭</span>
+                            </button>
+                        </div>
+                        <select class="form-control" id="exampleFormControlSelect1" name="option">
+                            {% block label %}
+                                {% for label in labels %}
+                                    <option selected="selected">{{ label.label }}</option>
+                                {% endfor %}
+                            {% endblock %}
+                        </select>
+                        <button type="submit" class="btn btn-outline-secondary pull-right">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container" >
+        {% csrf_token %}
+        {% if error %}
+            <div class="alert alert-dismissible fade show alert-danger" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+              <strong>{{ error }}</strong>
+            </div>
+        {% endif %}<!-- 消息提示 -->
+        <div class="row">
+            <div class="col-6">
+                    {% block article_title %}
+                        <input type="text" class="form-control" name="title" value="" id="example-text-input" placeholder="这里输入标题" style="margin-top: 30px; margin-bottom: 15px;">
+                    {% endblock %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style=""> <!-- 两边填充共30px;-->
+                  <textarea name="content" id="mytextarea">
+                      {% block article_content %}
+                          &lt;p&gt;在这里开始你的编辑.&lt;/p&gt;
+                      {% endblock %}
+                  </textarea>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
