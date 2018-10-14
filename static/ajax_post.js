@@ -29,6 +29,7 @@
         });
     });
 
+// 提交评论
  $(function(){
      $('#comment_submit').on('click', function(){
          var comment = $("#comment").val();
@@ -60,34 +61,36 @@
      });
  });
 
-// $(function (){
-//     $('#comment_submit').on('click', function() {
-//         var comment = $("#comment").val();
-//         var csrftoken = Cookies.get('csrftoken');
-//         var url = window.location.href;
-//         var article_id =  url.split("/");
-//
-//         $.ajax({
-//             cache: false,
-//             type: 'POST',
-//             url: '127.0.0.1:8000/article/comment/submit/' + article_id[-1],  // url: '127.0.0.1:8000/details/article_id/comment'
-//             // url: url,
-//             data: {'comment': comment},
-//             datatype: "json",
-//             async: true,
-//             beforeSend: function (xhr, setting) {
-//                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
-//             },
-//             success: function (data) {
-//                 if (data.status == 0){
-//                     alter('提交成功');
-//                 }
-//                 else if (data.status == 1){
-//                     alter('提交失败');
-//                 }
-//             },
-//         });
-//     });
-// });
-//
+// 删除评论
+$(function (){
+    $('#comment_delete').on('click', function() {
+        var comment_id = this.value;
+        var csrftoken = Cookies.get('csrftoken');
+        // var url = window.location.href;
+        // var article_id =  url.split("/")[5];
+
+        $.ajax({
+            cache: false,
+            type: 'POST',
+            url: 'http://127.0.0.1:8000/article/comment/delete/',
+            // url: url,
+            data: {'comment_id': comment_id, /*'article_id': article_id*/},
+            dataType: "json",
+            async: true,
+            beforeSend: function (xhr, setting) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            },
+            success: function (data) {
+                if (data.status == 0){
+                    // alter('提交成功');
+                    window.location.reload();//刷新当前页面.
+                }
+                else if (data.status == 1){
+                    alter('删除失败');
+                }
+            },
+        });
+    });
+});
+
 

@@ -112,7 +112,7 @@ class ArticleComment(View, LoginRequiredMixin):
     """
         评论
     """
-    def post(self, request, article_id):
+    def get(self, request, article_id):
         """
             提交评论
         """
@@ -129,6 +129,25 @@ class ArticleComment(View, LoginRequiredMixin):
         except Exception:
             msg['status'] = 1
             return JsonResponse(msg)
+
+
+class CommentDelete(View, LoginRequiredMixin):
+    """删除评论"""
+    def post(self, request):
+        comment_id = request.POST.get('comment_id')
+        user = request.user
+
+        msg = dict()
+        try:
+            comment = Comment.objects.get(id=comment_id)
+            if comment.user == user:
+                comment.status = 1
+                comment.save()
+                msg['status'] = 0
+        except:
+            msg['status'] = 1
+
+        return JsonResponse(msg)
 
 
 # 编辑器视图

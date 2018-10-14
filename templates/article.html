@@ -13,8 +13,9 @@ WeBlog-{{ article.title }}--{{ article.auther }}
 
     background: white;
 
-    {#box-shadow: 2px 2px 8px #aaa;#}
+    box-shadow: 0 1px 3px rgba(26,26,26,.1);
     {#border: 1px solid #ccc;#}
+    border-radius: 2px;
 }
 .container > .panel-footer {
     /*标题与文章内容之间,用一条边线分隔.*/
@@ -99,6 +100,9 @@ textarea {
                 <p class="col-md-12" style="min-height: 100px;">
                     {{ foo.comment }}
                 </p>
+                {% if foo.user == request.user %}
+                <button type="button" id="comment_delete" value="{{ foo.id }}">删除</button>
+                {% endif %}
             </div>
             <hr>
         {% endfor %}

@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from article import views
-from article.views import WangEditor, WangImg, EditView, UploadFile, ArticleComment
+from article.views import WangEditor, WangImg, EditView, UploadFile, ArticleComment, CommentDelete
 
 app_name = 'article'
 urlpatterns = [
@@ -19,7 +19,7 @@ urlpatterns = [
     #     path('', views.article_detail, name='details'),
     # ])),
     # 删除评论
-    # re_path(r'^comment/delete/(?P<article_id>\d+)$', views.article_detail, name='details'),
+    re_path(r'^comment/delete/$', CommentDelete.as_view(), name='comment_delete'),
 
 
     # 编辑器
