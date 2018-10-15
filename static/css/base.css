@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #F6F6F6;
+}
+
+/*导航栏 START*/
+.header {
+    height: 65px;
+    box-shadow: 0 1px 3px rgba(26,26,26,.1);
+    border-bottom: 1px solid #f1f1f1;
+    background-color: #FEFEFE;
+}
+
+.inner {
+    height:48px;
+    width: 1200px;
+    margin: 0 auto;
+    padding: 8px 0;
+}
+
+.logo {
+    float: left;
+}
+
+.nav {
+    float: right;
+}
+
+.logo a {
+    font-size: 32px;
+    font-family: inherit;
+    font-weight: 500;
+    color: inherit;
+    text-decoration: none;
+}
+/*导航栏 END*/
+
+/*版权*/
+#copyright {
+    height: 100px;
+    margin: 10px auto;
+    text-align: center;
+    font-size: 22px;
+}

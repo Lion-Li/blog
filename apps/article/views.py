@@ -76,7 +76,7 @@ def article_index(request, label_id=None):
         message['news'] = news
         message['article_label'] = int(label_id)
 
-    return render(request, 'index_bymyself.html', message)
+    return render(request, 'index.html', message)
 
 
 def article_detail(request, article_id):
@@ -112,7 +112,7 @@ class ArticleComment(View, LoginRequiredMixin):
     """
         评论
     """
-    def get(self, request, article_id):
+    def post(self, request, article_id):
         """
             提交评论
         """
